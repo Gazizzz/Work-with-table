@@ -103,13 +103,13 @@ function tdCreation(classlist) {
 function fillTable() {
   for (let i = 0; i < tableArr.length; i++) {
     let newlinea = document.createElement("tr");
-    let tdID = document.createElement("td");
+    let tdID = tdCreation("tdID");
     tdID.innerText = tableArr[i].id;
     newlinea.append(tdID);
-    let tdName = document.createElement("td");
+    let tdName = tdCreation("tdName");
     tdName.innerText = tableArr[i].name;
     newlinea.append(tdName);
-    let tdCost = document.createElement("td");
+    let tdCost = tdCreation("tdCost");
     tdCost.innerText = tableArr[i].cost;
     newlinea.append(tdCost);
     tbody.append(newlinea);
