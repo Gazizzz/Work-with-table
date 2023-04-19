@@ -50,57 +50,106 @@ const tableArr = [
     cost: 8,
   },
 ];
-let table = document.createElement("table");
-let thead = document.createElement("thead");
-let tbody = document.createElement("tbody");
-document.body.append(table);
-table.append(thead);
-table.append(tbody);
 
-let linea = document.createElement("tr");
-thead.append(linea);
-let headID = document.createElement("th");
-let headName = document.createElement("th");
-let headCost = document.createElement("th");
-headID.innerHTML = "ID";
-headName.innerHTML = "Название";
-headCost.innerHTML = "Цена";
-linea.append(headID);
-linea.append(headName);
-linea.append(headCost);
+// let papa = " ";
+// for (let i = 0; i < tableArr.length; i++) {
+//   let brat = document.createElement("div");
+//   brat.innerHTML = tableArr[i].id + tableArr[i].name;
+//   document.body.append(brat);
+// }
+// console.log(papa);
 
-function tableRows() {
-  let fragment = new DocumentFragment();
-  let newlinea = document.createElement("tr");
-  newlinea.insertAdjacentHTML("afterbegin", `<td class='tdFirst'> 1</td>`);
-  newlinea.insertAdjacentHTML("beforeend", `<td class='tdSecond'> 2</td>`);
-  newlinea.insertAdjacentHTML("beforeend", `<td class='tdThird'> 3</td>`);
-  fragment.append(newlinea);
-  return fragment;
+function thCreation(content) {
+  let th = document.createElement("th");
+  th.innerText = content;
+
+  return th;
+}
+
+function tableCreation() {
+  let tableFragment = new DocumentFragment();
+  let table = document.createElement("table");
+  let thead = document.createElement("thead");
+  let tbody = document.createElement("tbody");
+  document.body.append(table);
+  table.append(thead);
+  table.append(tbody);
+
+  let linea = document.createElement("tr");
+  thead.append(linea);
+  let headID = thCreation("ID");
+  let headName = thCreation("Название");
+  let headCost = thCreation("Цена");
+  linea.append(headID);
+  linea.append(headName);
+  linea.append(headCost);
+
+  tableFragment.append(table);
+  return tableFragment;
+}
+
+let out = document.querySelector(".out");
+out.append(tableCreation());
+
+let tbody = document.querySelector("tbody");
+
+function tdCreation(classlist) {
+  let td = document.createElement("td");
+  td.classList = classlist;
+
+  return td;
 }
 
 function fillTable() {
-  let mapID = tableArr.map((table) => table.id);
-  let mapName = tableArr.map((table) => table.name);
-  let mapCost = tableArr.map((table) => table.cost);
-  for (let i = 1; i <= tableArr.length; i++) {
-    tbody.append(tableRows());
-    let columnID = document.querySelectorAll(".tdFirst");
-    let columnName = document.querySelectorAll(".tdSecond");
-    let columnCost = document.querySelectorAll(".tdThird");
-    for (let k = 0; k < columnID.length; k++) {
-      columnID[k].innerHTML = `№ ${mapID[k]}`;
-      columnName[k].innerHTML = mapName[k];
-      columnCost[k].innerHTML = mapCost[k];
-    }
+  for (let i = 0; i < tableArr.length; i++) {
+    let newlinea = document.createElement("tr");
+    let tdID = document.createElement("td");
+    tdID.innerText = tableArr[i].id;
+    newlinea.append(tdID);
+    let tdName = document.createElement("td");
+    tdName.innerText = tableArr[i].name;
+    newlinea.append(tdName);
+    let tdCost = document.createElement("td");
+    tdCost.innerText = tableArr[i].cost;
+    newlinea.append(tdCost);
+    tbody.append(newlinea);
   }
 }
 fillTable();
+// let thClick = document.querySelector("tr");
+// thClick.addEventListener("click", clickFunc);
+// function clickFunc(event) {
+//   if (event.altKey && event.shiftKey) {
+//     console.log("ss");
+//   }
+// }
+// let mapID = tableArr.map((table) => table.id);
+// function test2() {
+//   for (let i = 0; i < tableArr.length; i++) {
+//     console.log(mapID[i + 1]);
+//     if (mapID[i] > mapID[i + 1]) {
+//       const test11 = mapID[i];
+//       mapID[i] = mapID[i + 1];
+//       mapID[i + 1] = test11;
+//     }
+//   }
+// }
 
-let thClick = document.querySelector("tr");
-thClick.addEventListener("click", clickFunc);
-function clickFunc(event) {
-  if (event.altKey && event.shiftKey) {
-    console.log("ss");
+// test2();
+let arr = [22, 33, 55, 51, 22];
+function test1() {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > arr[i + 1]) {
+      const test22 = arr[i];
+      arr[i] = arr[i + 1];
+      arr[i + 1] = test22;
+    }
   }
+  console.log(arr);
 }
+test1();
+// let test21 = document.querySelector(".copy");
+// test21.addEventListener("copy", function (event) {
+//   test21 = alert("Копирование запрещено!");
+//   return false;
+// });
