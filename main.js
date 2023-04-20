@@ -71,7 +71,6 @@ function tableCreation() {
   let table = document.createElement("table");
   let thead = document.createElement("thead");
   let tbody = document.createElement("tbody");
-  document.body.append(table);
   table.append(thead);
   table.append(tbody);
 
