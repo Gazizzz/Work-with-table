@@ -69,6 +69,7 @@ function thCreation(content) {
 function tableCreation() {
   let tableFragment = new DocumentFragment();
   let table = document.createElement("table");
+  table.classList = table;
   let thead = document.createElement("thead");
   let tbody = document.createElement("tbody");
   table.append(thead);
@@ -77,8 +78,12 @@ function tableCreation() {
   let linea = document.createElement("tr");
   thead.append(linea);
   let headID = thCreation("ID");
+  headID.dataset.type = "number";
   let headName = thCreation("Название");
+  headName.dataset.type = "string";
   let headCost = thCreation("Цена");
+  headCost.dataset.type = "number";
+  headCost.classList = "headCost";
   linea.append(headID);
   linea.append(headName);
   linea.append(headCost);
@@ -134,21 +139,59 @@ fillTable();
 //   }
 // }
 
-// test2();
-let arr = [22, 33, 55, 51, 22];
-function test1() {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > arr[i + 1]) {
-      const test22 = arr[i];
-      arr[i] = arr[i + 1];
-      arr[i + 1] = test22;
-    }
+/*
+const table = document.querySelector("table");
+const ths = table.querySelectorAll("th");
+const Tbody = table.querySelector("tbody");
+
+ths.forEach((th) => {
+  th.addEventListener("click", () => {
+    const column = th.cellIndex;
+    const rows = Array.from(Tbody.querySelectorAll("tr"));
+
+    rows.sort((a, b) => {
+      const textA = a.querySelectorAll("td")[column].textContent;
+      const textB = b.querySelectorAll("td")[column].textContent;
+      return textA.localeCompare(textB, undefined, { numeric: true });
+    });
+
+    Tbody.innerHTML = "";
+
+    rows.forEach((row) => {
+      Tbody.appendChild(row);
+    });
+  });
+});
+ */
+
+const table = document.querySelector("table");
+table.onclick = function (e) {
+  if ((e.target.tagName = "TH")) {
+    let th = e.target;
+
+    sortable(th.cellIndex, th.dataset.type, "table");
   }
-  console.log(arr);
+};
+function sortable(colNum, type, id) {
+  let elem = document.querySelector(id);
+  let Tbody = elem.querySelector("tbody");
+  let rowsArray = Array.from(Tbody.rows);
+
+  let compare;
+  switch (type) {
+    case "number":
+      compare = function (rowA, rowB) {
+        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+      };
+      break;
+    case "string":
+      compare = function (rowA, rowB) {
+        return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML
+          ? 1
+          : -1;
+      };
+      break;
+  }
+  rowsArray.sort(compare);
+  Tbody.append(...rowsArray);
 }
-test1();
-// let test21 = document.querySelector(".copy");
-// test21.addEventListener("copy", function (event) {
-//   test21 = alert("Копирование запрещено!");
-//   return false;
-// });

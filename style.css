@@ -1,11 +1,15 @@
 table {
-  border: 2px solid black;
+  margin-top: 40px;
 }
 tbody {
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 .sw {
-  background-color: red;
+  /* background-color: red;
   width: 200px;
-  height: 200px;
+  height: 200px; */
+}
+body {
+  display: flex;
+  justify-content: center;
 }
