@@ -14,8 +14,6 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="out"></div>
-
     <!-- <div class="copy">Нельзя копировать.</div>
     <div oncopy="alert('Копирование запрещено!');return false">
       Уважаемый пользователь, Копирование информации запрещено для вас. Если вы
@@ -24,6 +22,26 @@
     </div>  -->
 
     <div class="sw"></div>
+    <form action="">
+      <input
+        type="number"
+        id="form-ID"
+        placeholder="ID"
+        class="form-input"
+        readonly
+      />
+      <input
+        type="text"
+        id="form-Name"
+        placeholder="Название"
+        class="form-input"
+      />
+      <input type="text" id="form-cost" placeholder="Цена" class="form-input" />
+      <button class="form-btn" type="button" disabled>
+        Добавить в таблицу
+      </button>
+    </form>
+    <div class="out"></div>
     <script src="main.js"></script>
   </body>
 </html>

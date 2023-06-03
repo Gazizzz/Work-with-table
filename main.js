@@ -195,3 +195,53 @@ function sortable(colNum, type, id) {
   rowsArray.sort(compare);
   Tbody.append(...rowsArray);
 }
+
+const formId = document.querySelector("#form-ID");
+const formName = document.querySelector("#form-Name");
+const formCost = document.querySelector("#form-cost");
+const tdIDNumb = document.querySelectorAll(".tdID");
+let currentID;
+tdIDNumb.forEach((element) => {
+  currentID = Number(element.innerHTML) + 1;
+});
+formId.value = currentID;
+const formButton = document.querySelector(".form-btn");
+const formInput = document.querySelectorAll(".form-input");
+
+formInput.forEach((e) => {
+  e.addEventListener("input", (e) => {
+    if (formName == " " || tdIDNumb == " ") {
+      formButton.disabled = true;
+    } else {
+      formButton.disabled = false;
+    }
+  });
+});
+
+formButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const fragment = new DocumentFragment();
+  const valueID = formId.value;
+  const valueName = formName.value;
+  const valueCost = formCost.value;
+  const tr = document.createElement("tr");
+  const tdID = document.createElement("td");
+  tdID.classList = "tdID";
+  tdID.innerHTML = valueID;
+  const tdName = document.createElement("td");
+  tdName.innerHTML = valueName;
+  const tdCost = document.createElement("td");
+  tdCost.innerHTML = valueCost;
+  const Tbody = document.querySelector("tbody");
+  tr.append(tdID);
+  tr.append(tdName);
+  tr.append(tdCost);
+  fragment.append(tr);
+
+  Tbody.append(fragment);
+
+  currentID++;
+  formId.value = currentID;
+});
+
+console.log();
