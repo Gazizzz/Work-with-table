@@ -13,3 +13,6 @@ body {
   display: flex;
   justify-content: center;
 }
+.tdDelete {
+  color: red;
+}

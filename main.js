@@ -116,6 +116,10 @@ function fillTable() {
     let tdCost = tdCreation("tdCost");
     tdCost.innerText = tableArr[i].cost;
     newlinea.append(tdCost);
+    const tdDelete = document.createElement("td");
+    tdDelete.classList = "tdDelete";
+    tdDelete.innerHTML = "x";
+    newlinea.append(tdDelete);
     tbody.append(newlinea);
   }
 }
@@ -232,10 +236,14 @@ formButton.addEventListener("click", (e) => {
   tdName.innerHTML = valueName;
   const tdCost = document.createElement("td");
   tdCost.innerHTML = valueCost;
+  const tdDelete = document.createElement("td");
+  tdDelete.innerHTML = "x";
+  tdDelete.classList = "tdDelete";
   const Tbody = document.querySelector("tbody");
   tr.append(tdID);
   tr.append(tdName);
   tr.append(tdCost);
+  tr.append(tdDelete);
   fragment.append(tr);
 
   Tbody.append(fragment);
@@ -244,4 +252,12 @@ formButton.addEventListener("click", (e) => {
   formId.value = currentID;
 });
 
-console.log();
+const deleteBtn = document.querySelectorAll(".tdDelete");
+deleteBtn.forEach((btn) =>
+  btn.addEventListener("click", (e) => {
+    const test = e.target;
+    console.log(test);
+    // const qwe = test.parentNode;
+    // test.parentNode.remove(qwe);
+  })
+);
