@@ -51,14 +51,6 @@ const tableArr = [
   },
 ];
 
-// let papa = " ";
-// for (let i = 0; i < tableArr.length; i++) {
-//   let brat = document.createElement("div");
-//   brat.innerHTML = tableArr[i].id + tableArr[i].name;
-//   document.body.append(brat);
-// }
-// console.log(papa);
-
 function thCreation(content) {
   let th = document.createElement("th");
   th.innerText = content;
@@ -78,9 +70,11 @@ function tableCreation() {
   let linea = document.createElement("tr");
   thead.append(linea);
   let headID = thCreation("ID");
+  headID.classList = "headID";
   headID.dataset.type = "number";
   let headName = thCreation("Название");
   headName.dataset.type = "string";
+  headName.classList = "headName";
   let headCost = thCreation("Цена");
   headCost.dataset.type = "number";
   headCost.classList = "headCost";
@@ -97,108 +91,79 @@ out.append(tableCreation());
 
 let tbody = document.querySelector("tbody");
 
-function tdCreation(classlist) {
+function tdCreation(classlist, value) {
   let td = document.createElement("td");
   td.classList = classlist;
+  td.innerHTML = value;
 
   return td;
+}
+function rowFilling(classList, value) {
+  let row = tdCreation(classList);
+  row.innerText = value;
+  return row;
 }
 
 function fillTable() {
   for (let i = 0; i < tableArr.length; i++) {
     let newlinea = document.createElement("tr");
-    let tdID = tdCreation("tdID");
-    tdID.innerText = tableArr[i].id;
-    newlinea.append(tdID);
-    let tdName = tdCreation("tdName");
-    tdName.innerText = tableArr[i].name;
-    newlinea.append(tdName);
-    let tdCost = tdCreation("tdCost");
-    tdCost.innerText = tableArr[i].cost;
-    newlinea.append(tdCost);
-    const tdDelete = document.createElement("td");
-    tdDelete.classList = "tdDelete";
-    tdDelete.innerHTML = "x";
-    newlinea.append(tdDelete);
+    newlinea.append(rowFilling("tdID", tableArr[i].id));
+    newlinea.append(rowFilling("tdName", tableArr[i].name));
+    newlinea.append(rowFilling("tdCost", tableArr[i].cost));
+    newlinea.append(rowFilling("tdDelete", "x"));
     tbody.append(newlinea);
   }
 }
 fillTable();
-// let thClick = document.querySelector("tr");
-// thClick.addEventListener("click", clickFunc);
-// function clickFunc(event) {
-//   if (event.altKey && event.shiftKey) {
-//     console.log("ss");
+// tableArr.sort((a, b) => {
+//   const nameA = a.name.toUpperCase();
+//   const nameB = b.name.toUpperCase();
+//   if (nameA < nameB) {
+//     return -1;
 //   }
-// }
-// let mapID = tableArr.map((table) => table.id);
-// function test2() {
-//   for (let i = 0; i < tableArr.length; i++) {
-//     console.log(mapID[i + 1]);
-//     if (mapID[i] > mapID[i + 1]) {
-//       const test11 = mapID[i];
-//       mapID[i] = mapID[i + 1];
-//       mapID[i + 1] = test11;
-//     }
+//   if (nameA > nameB) {
+//     return 1;
 //   }
-// }
+//   return 0;
+// });
 
-/*
-const table = document.querySelector("table");
-const ths = table.querySelectorAll("th");
-const Tbody = table.querySelector("tbody");
-
-ths.forEach((th) => {
-  th.addEventListener("click", () => {
-    const column = th.cellIndex;
-    const rows = Array.from(Tbody.querySelectorAll("tr"));
-
-    rows.sort((a, b) => {
-      const textA = a.querySelectorAll("td")[column].textContent;
-      const textB = b.querySelectorAll("td")[column].textContent;
-      return textA.localeCompare(textB, undefined, { numeric: true });
-    });
-
-    Tbody.innerHTML = "";
-
-    rows.forEach((row) => {
-      Tbody.appendChild(row);
-    });
-  });
+// console.log(tableArr);
+const headCost = document.querySelector(".headCost");
+const headName = document.querySelector(".headName");
+const headID = document.querySelector(".headID");
+let headCostState = true;
+let headNameState = true;
+let headIDState = true;
+headCost.addEventListener("click", (e) => {
+  if (headCostState) {
+    tableArr.sort((a, b) => a.cost - b.cost);
+  } else {
+    tableArr.sort((a, b) => b.cost - a.cost);
+  }
+  headCostState = !headCostState;
+  tbody.innerHTML = "";
+  fillTable();
 });
- */
-
-const table = document.querySelector("table");
-table.onclick = function (e) {
-  if ((e.target.tagName = "TH")) {
-    let th = e.target;
-
-    sortable(th.cellIndex, th.dataset.type, "table");
+headName.addEventListener("click", (e) => {
+  if (headNameState) {
+    tableArr.sort((a, b) => a.name.localeCompare(b.name));
+  } else {
+    tableArr.sort((a, b) => b.name.localeCompare(a.name));
   }
-};
-function sortable(colNum, type, id) {
-  let elem = document.querySelector(id);
-  let Tbody = elem.querySelector("tbody");
-  let rowsArray = Array.from(Tbody.rows);
-
-  let compare;
-  switch (type) {
-    case "number":
-      compare = function (rowA, rowB) {
-        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
-      };
-      break;
-    case "string":
-      compare = function (rowA, rowB) {
-        return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML
-          ? 1
-          : -1;
-      };
-      break;
+  headNameState = !headNameState;
+  tbody.innerHTML = "";
+  fillTable();
+});
+headID.addEventListener("click", (e) => {
+  if (headIDState) {
+    tableArr.sort((a, b) => a.id - b.id);
+  } else {
+    tableArr.sort((a, b) => b.id - a.id);
   }
-  rowsArray.sort(compare);
-  Tbody.append(...rowsArray);
-}
+  headIDState = !headIDState;
+  tbody.innerHTML = "";
+  fillTable();
+});
 
 const formId = document.querySelector("#form-ID");
 const formName = document.querySelector("#form-Name");
@@ -212,16 +177,6 @@ formId.value = currentID;
 const formButton = document.querySelector(".form-btn");
 const formInput = document.querySelectorAll(".form-input");
 
-formInput.forEach((e) => {
-  e.addEventListener("input", (e) => {
-    if (formName == " " || tdIDNumb == " ") {
-      formButton.disabled = true;
-    } else {
-      formButton.disabled = false;
-    }
-  });
-});
-
 formButton.addEventListener("click", (e) => {
   e.preventDefault();
   const fragment = new DocumentFragment();
@@ -229,20 +184,13 @@ formButton.addEventListener("click", (e) => {
   const valueName = formName.value;
   const valueCost = formCost.value;
   const tr = document.createElement("tr");
-  const tdID = document.createElement("td");
-  tdID.classList = "tdID";
-  tdID.innerHTML = valueID;
-  const tdName = document.createElement("td");
-  tdName.innerHTML = valueName;
-  const tdCost = document.createElement("td");
-  tdCost.innerHTML = valueCost;
   const tdDelete = document.createElement("td");
   tdDelete.innerHTML = "x";
   tdDelete.classList = "tdDelete";
   const Tbody = document.querySelector("tbody");
-  tr.append(tdID);
-  tr.append(tdName);
-  tr.append(tdCost);
+  tr.append(tdCreation("tdID", valueID));
+  tr.append(tdCreation("tdName", valueName));
+  tr.append(tdCreation("tdCost", valueCost));
   tr.append(tdDelete);
   fragment.append(tr);
 
@@ -250,14 +198,15 @@ formButton.addEventListener("click", (e) => {
 
   currentID++;
   formId.value = currentID;
+  let newObjectsTableArr = { id: valueID, name: valueName, cost: valueCost };
+  tableArr.push(newObjectsTableArr);
+  formName.value = "";
+  formCost.value = "";
 });
 
-const deleteBtn = document.querySelectorAll(".tdDelete");
-deleteBtn.forEach((btn) =>
-  btn.addEventListener("click", (e) => {
-    const test = e.target;
-    console.log(test);
-    // const qwe = test.parentNode;
-    // test.parentNode.remove(qwe);
-  })
-);
+let tBody = document.querySelector("tbody");
+tBody.addEventListener("click", (e) => {
+  const target = e.target;
+  const parentnOde = target.parentNode;
+  target.parentNode.remove(parentnOde);
+});
