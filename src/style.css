@@ -16,3 +16,9 @@ body {
 .tdDelete {
   color: red;
 }
+.selected {
+  opacity: 0.6;
+}
+.tdNumb {
+  padding-right: 15px;
+}
